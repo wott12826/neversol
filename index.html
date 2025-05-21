@@ -206,7 +206,7 @@
           <span class="word sell">SELL</span>
         </div>
       </div>
-      <button class="button" id="mainButton">Never Click</button>
+      <button class="button" id="mainButton">Sell</button>
     </div>
 
     <div class="footer-text">
@@ -235,7 +235,7 @@
       const spawnedButtons = [];
 
       const overlay = document.getElementById("overlayText");
-      const messages = ["I", "SAID", "NEVER", "CLICK"];
+      const messages = ["I", "SAID", "NEVER", "SELL"];
 
       function showOverlaySequence() {
         overlay.classList.add("show");
@@ -259,7 +259,7 @@
         if (buttonCount < maxButtons) {
           const btn = document.createElement("button");
           btn.className = "button";
-          btn.textContent = "Never Click";
+          btn.textContent = "Never Sell";
           btn.style.position = "absolute";
           btn.style.top = Math.random() * 90 + "vh";
           btn.style.left = Math.random() * 90 + "vw";
