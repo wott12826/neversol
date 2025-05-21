@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeverSol Replica</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: white;
+        font-family: monospace, sans-serif;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .side {
+        position: fixed;
+        bottom: 0;
+        height: 110vh;
+        z-index: 0;
+      }
+
+      .side.left {
+        left: -100px;
+        top: 0px;
+        width: 706px;
+        height: 672px;
+        z-index: 11;
+      }
+
+      .side.right {
+        right: 0px;
+        top: 0px;
+        width: 519px;
+        height: 656px;
+        z-index: 12;
+        transform: scaleX(-1);
+      }
+
+      .side img {
+        height: 110vh;
+        width: auto;
+        display: block;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .center-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .title {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        font-size: 5rem;
+        font-weight: bold;
+      }
+
+      .static-part {
+        color: white;
+        margin-top: auto;
+        margin-left: auto;
+      }
+
+      .switching-word {
+        position: relative;
+        min-width: 12rem;
+        height: 5rem;
+        overflow: hidden;
+      }
+
+      .word {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(100%);
+        transition: all 0.4s ease;
+      }
+
+      .word.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .sol {
+        color: #86efac;
+      }
+
+      .sell {
+        color: #f97316;
+      }
+
+      .button {
+        margin-top: 2rem;
+        padding: 1rem 2rem;
+        background: #f97316;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        border-radius: 6px;
+        flex-direction: row;
+        z-index: 15;
+        position: relative;
+      }
+
+      .button:hover {
+        background: #fb923c;
+      }
+
+      .top-icons {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        z-index: 12;
+      }
+
+      .top-icons img {
+        height: 50px;
+        filter: brightness(1000%);
+        cursor: pointer;
+      }
+
+      .footer-text {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+        color: gray;
+        z-index: 13;
+      }
+
+      .footer-text .contract a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .footer-text .contract a:hover {
+        text-decoration: underline;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10rem;
+        font-weight: bold;
+        display: none;
+        color: white;
+        text-align: center;
+      }
+
+      .overlay.show {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="side left">
+      <img src="images/image-c8b3e524-e51d-4903-b6ce-ccbdb392270c.webp" alt="Left image" />
+    </div>
+
+    <div class="side right">
+      <img src="images/image-a46b5b82-d5db-4151-9f47-e364f1ebd508.webp" alt="Right image" />
+    </div>
+
+    <div class="top-icons">
+      <img src="images/xicon.png" alt="Twitter" />
+      <img src="images/icontg tg2.png" alt="Telegram" />
+      <img src="images/icontg dex.png" alt="Dexscreener" />
+      <img src="images/raydium_icon.png" alt="Radium" />
+      <img src="images/mexc-logo.png" alt="Mexc" />
+    </div>
+
+    <div class="center-content">
+      <div class="title">
+        <span class="static-part">NEVER</span>
+        <div class="switching-word">
+          <span class="word sol show">SOL</span>
+          <span class="word sell">SELL</span>
+        </div>
+      </div>
+      <button class="button" id="mainButton">Never Click</button>
+    </div>
+
+    <div class="footer-text">
+      <p>Never copy our contract address</p>
+      <p class="contract">
+        <a href="https://solscan.io/address/CxrhHSqyW8YTDWc4csJMMgo7uBUJSXzNzrWhtw9ULdru" target="_blank">
+          CxrhHSqyW8YTDWc4csJMMgo7uBUJSXzNzrWhtw9ULdru
+        </a>
+      </p>
+    </div>
+
+    <div class="overlay" id="overlayText"></div>
+
+    <script>
+      const words = document.querySelectorAll(".word");
+      let current = 0;
+
+      setInterval(() => {
+        words[current].classList.remove("show");
+        current = (current + 1) % words.length;
+        words[current].classList.add("show");
+      }, 1500);
+
+      let buttonCount = 0;
+      const maxButtons = 10;
+      const spawnedButtons = [];
+
+      const overlay = document.getElementById("overlayText");
+      const messages = ["I", "SAID", "NEVER", "CLICK"];
+
+      function showOverlaySequence() {
+        overlay.classList.add("show");
+
+        let i = 0;
+        const interval = setInterval(() => {
+          if (i < messages.length) {
+            overlay.textContent = messages[i];
+            i++;
+          } else {
+            clearInterval(interval);
+            setTimeout(() => {
+              overlay.classList.remove("show");
+              overlay.textContent = "";
+            }, 700);
+          }
+        }, 700);
+      }
+
+      function createRandomButton() {
+        if (buttonCount < maxButtons) {
+          const btn = document.createElement("button");
+          btn.className = "button";
+          btn.textContent = "Never Click";
+          btn.style.position = "absolute";
+          btn.style.top = Math.random() * 90 + "vh";
+          btn.style.left = Math.random() * 90 + "vw";
+          btn.style.zIndex = 15;
+          btn.addEventListener("click", createRandomButton);
+          document.body.appendChild(btn);
+          spawnedButtons.push(btn);
+          buttonCount++;
+        } else {
+          showOverlaySequence();
+          spawnedButtons.forEach((btn) => btn.remove());
+          spawnedButtons.length = 0;
+          buttonCount = 0;
+        }
+      }
+
+      document.getElementById("mainButton").addEventListener("click", createRandomButton);
+    </script>
+  </body>
+</html>
