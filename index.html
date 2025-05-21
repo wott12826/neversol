@@ -37,7 +37,6 @@
         width: 519px;
         height: 656px;
         z-index: 12;
-      
       }
 
       .side img {
@@ -203,21 +202,52 @@
       .shake {
         animation: shake 0.4s ease;
       }
+      @media (max-width: 768px) {
+        .title {
+          font-size: 2.5rem;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .switching-word {
+          height: 3rem;
+          min-width: 8rem;
+        }
+
+        .word {
+          font-size: 2.5rem;
+        }
+
+        .button {
+          padding: 0.8rem 1.5rem;
+          font-size: 1rem;
+        }
+
+        .top-icons img {
+          height: 32px;
+        }
+
+        .footer-text {
+          font-size: 0.8rem;
+          padding: 0 10px;
+        }
+
+        .overlay {
+          font-size: 3rem;
+          padding: 1rem;
+          text-align: center;
+          line-height: 1.3;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="side left">
-      <img
-        src="images\IMG_1777.png"
-        alt="Left image"
-      />
+      <img src="images\IMG_1777.png" alt="Left image" />
     </div>
 
     <div class="side right">
-      <img
-        src="images\IMG_1778.png"
-        alt="Right image"
-      />
+      <img src="images\IMG_1778.png" alt="Right image" />
     </div>
 
     <div class="top-icons">
@@ -296,25 +326,33 @@
       }
 
       function createRandomButton() {
-        if (buttonCount < maxButtons) {
-          const btn = document.createElement("button");
-          btn.className = "button";
-          btn.textContent = "NEVER SELL";
-          btn.style.position = "absolute";
-          btn.style.top = Math.random() * 90 + "vh";
-          btn.style.left = Math.random() * 90 + "vw";
-          btn.style.zIndex = 15;
-          btn.addEventListener("click", createRandomButton);
-          document.body.appendChild(btn);
-          spawnedButtons.push(btn);
-          buttonCount++;
-        } else {
-          showOverlaySequence();
-          spawnedButtons.forEach((btn) => btn.remove());
-          spawnedButtons.length = 0;
-          buttonCount = 0;
-        }
-      }
+  if (buttonCount < maxButtons) {
+    const btn = document.createElement("button");
+    btn.className = "button";
+    btn.textContent = "NEVER SELL";
+    btn.style.position = "absolute";
+    btn.style.zIndex = 15;
+
+    // Безопасные границы — не выходят за экран
+    const padding = 60; // чтобы не вылезали
+    const top = Math.random() * (window.innerHeight - padding);
+    const left = Math.random() * (window.innerWidth - padding);
+
+    btn.style.top = `${top}px`;
+    btn.style.left = `${left}px`;
+
+    btn.addEventListener("click", createRandomButton);
+    document.body.appendChild(btn);
+    spawnedButtons.push(btn);
+    buttonCount++;
+  } else {
+    showOverlaySequence();
+    spawnedButtons.forEach((btn) => btn.remove());
+    spawnedButtons.length = 0;
+    buttonCount = 0;
+  }
+}
+
 
       document
         .getElementById("mainButton")
