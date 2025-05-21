@@ -179,15 +179,45 @@
       .overlay.show {
         display: flex;
       }
+      @keyframes shake {
+        0% {
+          transform: translate(0px, 0px);
+        }
+        20% {
+          transform: translate(-10px, 5px);
+        }
+        40% {
+          transform: translate(10px, -5px);
+        }
+        60% {
+          transform: translate(-10px, 5px);
+        }
+        80% {
+          transform: translate(10px, -5px);
+        }
+        100% {
+          transform: translate(0px, 0px);
+        }
+      }
+
+      .shake {
+        animation: shake 0.4s ease;
+      }
     </style>
   </head>
   <body>
     <div class="side left">
-      <img src="images/image-c8b3e524-e51d-4903-b6ce-ccbdb392270c.webp" alt="Left image" />
+      <img
+        src="images/image-c8b3e524-e51d-4903-b6ce-ccbdb392270c.webp"
+        alt="Left image"
+      />
     </div>
 
     <div class="side right">
-      <img src="images/image-a46b5b82-d5db-4151-9f47-e364f1ebd508.webp" alt="Right image" />
+      <img
+        src="images/image-a46b5b82-d5db-4151-9f47-e364f1ebd508.webp"
+        alt="Right image"
+      />
     </div>
 
     <div class="top-icons">
@@ -212,7 +242,10 @@
     <div class="footer-text">
       <p>Never copy our contract address</p>
       <p class="contract">
-        <a href="https://solscan.io/address/CxrhHSqyW8YTDWc4csJMMgo7uBUJSXzNzrWhtw9ULdru" target="_blank">
+        <a
+          href="https://solscan.io/address/CxrhHSqyW8YTDWc4csJMMgo7uBUJSXzNzrWhtw9ULdru"
+          target="_blank"
+        >
           CxrhHSqyW8YTDWc4csJMMgo7uBUJSXzNzrWhtw9ULdru
         </a>
       </p>
@@ -244,6 +277,13 @@
         const interval = setInterval(() => {
           if (i < messages.length) {
             overlay.textContent = messages[i];
+
+            // Добавляем тряску
+            document.body.classList.add("shake");
+            setTimeout(() => {
+              document.body.classList.remove("shake");
+            }, 400);
+
             i++;
           } else {
             clearInterval(interval);
@@ -276,7 +316,9 @@
         }
       }
 
-      document.getElementById("mainButton").addEventListener("click", createRandomButton);
+      document
+        .getElementById("mainButton")
+        .addEventListener("click", createRandomButton);
     </script>
   </body>
 </html>
