@@ -65,29 +65,34 @@
         gap: 0.5rem;
         font-size: 5rem;
         font-weight: bold;
+        white-space: nowrap;
       }
 
       .static-part {
         color: white;
         margin-top: auto;
         margin-left: auto;
+        display: inline-block;
       }
 
       .switching-word {
-        position: relative;
-        min-width: 12rem;
-        height: 5rem;
-        overflow: hidden;
+        display: inline-block;
+  position: relative;
+  width: 3ch; /* Примерно ширина слова SOL/SELL */
+  height: 1em;
+  overflow: hidden;
+  vertical-align: bottom;
       }
 
       .word {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        opacity: 0;
-        transform: translateY(100%);
-        transition: all 0.4s ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.4s ease;
+  text-align: left;
       }
 
       .word.show {
@@ -275,12 +280,11 @@
 
     <div class="center-content">
       <div class="title">
-        <span class="static-part">NEVER</span>
-        <div class="switching-word">
+        <span class="static-part">NEVER</span><span class="switching-word">
           <span class="word sol show">SOL</span>
           <span class="word sell">SELL</span>
         </div>
-      </div>
+      </span>
       <button class="button" id="mainButton">SELL</button>
     </div>
 
